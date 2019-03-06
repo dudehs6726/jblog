@@ -7,6 +7,8 @@ public class CategoryVo {
 	private String description;
 	private String regDate;
 	private long userNo;
+	private int postCount;
+	private int number;
 	
 	public long getNo() {
 		return no;
@@ -38,11 +40,22 @@ public class CategoryVo {
 	public void setUserNo(long userNo) {
 		this.userNo = userNo;
 	}
-	
+	public int getPostCount() {
+		return postCount;
+	}
+	public void setPostCount(int postCount) {
+		this.postCount = postCount;
+	}
+	public int getNumber() {
+		return number;
+	}
+	public void setNumber(int number) {
+		this.number = number;
+	}
 	@Override
 	public String toString() {
 		return "CategoryVo [no=" + no + ", name=" + name + ", description=" + description + ", regDate=" + regDate
-				+ ", userNo=" + userNo + "]";
+				+ ", userNo=" + userNo + ", postCount=" + postCount + ", number=" + number + "]";
 	}
 	
 }

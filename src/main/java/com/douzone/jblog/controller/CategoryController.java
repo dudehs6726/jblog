@@ -80,7 +80,6 @@ public class CategoryController {
 		categoryVo.setUserNo(authUser.getNo());
 		
 		long no = categoryService.insertMain(categoryVo);
-		//long no = guestBookService.insert(guestBookVo);
 		
 		CategoryVo newVo = categoryService.get(no);
 

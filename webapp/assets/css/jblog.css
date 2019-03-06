@@ -123,5 +123,9 @@ div#extra .blog-logo img	{ width:150px }
 div#footer		{ background:#F0F0F0; color:#666 }
 div#footer p	{ text-align:center; margin:0; padding:8px 10px }
 
+.table-list table	{ width:100% }
 
+.table-list table,	
+.table-list table td { border:1px solid #333 }
+.table-list table td { padding:5px }
 

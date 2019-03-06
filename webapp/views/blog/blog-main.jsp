@@ -21,11 +21,48 @@
 						${fn:replace(postVo.content, newline, "<br>") }
 					<p>
 				</div>
+				<c:if test="${!empty postVo }">
+				<form action="${pageContext.servletContext.contextPath }/${id}/${postVo.categoryNo}/${postVo.no}/insert" method="post">
+					<table class="table-list">
+						<tr>
+							<td colspan=3>
+							<textarea rows="4" cols="70" name="content"></textarea>
+							</td>
+							<td colspan=1 align=right><input type="submit" VALUE=" 확인 "></td>
+						</tr>
+					</table>
+				</form>
+				
+				<c:set var="count" value="${fn:length(commentList) }"/>
+				<c:forEach items="${commentList }" var="vo" varStatus="status">
+				<table class="table-list">
+					<tr>
+						<td>[${count-status.index }]</td>
+						<c:choose>
+							<c:when test="${authUser.id == id }">
+								<td>${vo.regDate }</td>
+								<td><a href="${pageContext.servletContext.contextPath }/${id}/${postVo.categoryNo}/${postVo.no}/delete/${vo.no}">삭제</a></td>
+							</c:when>
+							<c:otherwise>
+								<td colspan=2>${vo.regDate }</td>
+							</c:otherwise>
+						</c:choose>
+					</tr>
+					<tr>
+						<td colspan=3>
+							${fn:replace(vo.content, newline, "<br>") }	
+						</td>
+					</tr>
+				</table>
+				<br>
+				</c:forEach>
+				</c:if>
 				<ul class="blog-list">
 					<c:forEach items="${postList }" var="vo" varStatus="status">
 						<li><a href="${pageContext.servletContext.contextPath }/${id}/${vo.categoryNo}/${vo.no}">${vo.title }</a> <span>${vo.regDate }</span></li>
 					</c:forEach>
 				</ul>
+				 
 				<!-- pager 추가 -->
 				<!-- 
 				<div class="pager">

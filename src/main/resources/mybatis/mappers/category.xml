@@ -26,11 +26,21 @@
 	
 	<select id="getByUserNo" parameterType="long" resultType="categoryvo">
 		<![CDATA[
-				select a.NO as no, 
+				select @rownum:=@rownum+1 as number,
+					   a.no, 
 					   a.NAME as name,
 					   a.DESCRIPTION as description,
-					   DATE_FORMAT(a.REG_DATE, '%Y-%m-%d %h:%m:%s ') as regDate
-				  from category a 
+					   DATE_FORMAT(a.REG_DATE, '%Y-%m-%d %h:%m:%s ') as regDate,
+					   ifnull(b.postCount, 0) as postCount
+				  from category a
+				  	   left outer join 
+				  	   (select a.CATEGORY_NO, count(*) as postCount
+						  from post a
+				 		 group by a.CATEGORY_NO) b
+				       on a.no = b.CATEGORY_NO,
+				       (select @rownum:=count(*)-count(*)
+    					  from category c
+   						 where c.USER_NO = #{value }) c
 				 where a.USER_NO = #{value }
 				 order by a.no desc
 		]]>

@@ -43,11 +43,6 @@ public class UserController {
 		Model model) {
 		
 		if(result.hasErrors()) {
-//			List<ObjectError> list = result.getAllErrors();
-//			
-//			for(ObjectError error:list) {
-//				System.out.println(error);
-//			}
 			
 			model.addAllAttributes(result.getModel());//map으로 만들어 보냄
 			return "user/join";

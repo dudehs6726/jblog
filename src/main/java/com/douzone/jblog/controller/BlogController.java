@@ -15,11 +15,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.douzone.jblog.service.BlogService;
 import com.douzone.jblog.service.CategoryService;
+import com.douzone.jblog.service.CommentService;
 import com.douzone.jblog.service.FileuploadService;
 import com.douzone.jblog.service.PostService;
 import com.douzone.jblog.service.UserService;
 import com.douzone.jblog.vo.BlogVo;
 import com.douzone.jblog.vo.CategoryVo;
+import com.douzone.jblog.vo.CommentVo;
 import com.douzone.jblog.vo.PostVo;
 import com.douzone.jblog.vo.UserVo;
 import com.douzone.security.AuthUser;
@@ -41,11 +43,15 @@ public class BlogController {
 	private PostService postService;
 	
 	@Autowired
+	private CommentService commentService;
+	
+	@Autowired
 	private FileuploadService fileuploadService;
 
 	@RequestMapping({"","/{pathNo1}","/{pathNo1}/{pathNo2}" })
 	public String blogMain(
 			@ModelAttribute BlogVo blogVo,
+			@AuthUser UserVo authUser,
 			@PathVariable("id") String id,
 			@PathVariable("pathNo1") Optional<Long> pathNo1,
 			@PathVariable("pathNo2") Optional<Long> pathNo2,
@@ -79,7 +85,7 @@ public class BlogController {
 			category = cateVo.getNo();
 		}
 		
-		//포스트 리싀트 호출
+		//포스트 리스트 호출
 		List<PostVo>postList = postService.getList(category);
 		PostVo postVo = null;
 		
@@ -88,12 +94,12 @@ public class BlogController {
 			post = postVo.getNo();
 		}
 
-		//CategoryVo cateVo = categoryList.get(0);
 		
-		
-		//PostVo postVo = postList.get(0);
 		if(postList.size() > 0) {
 			postVo = postService.get(post);
+			//댓굴 호출
+			List<CommentVo>commentList = commentService.getList(post);
+			model.addAttribute("commentList", commentList);
 		}
 		
 		model.addAttribute("id", id);
@@ -101,6 +107,8 @@ public class BlogController {
 		model.addAttribute("postList", postList);
 		model.addAttribute("postVo", postVo);
 		model.addAttribute("blogVo", blogVo);
+		model.addAttribute("authUser", authUser);
+		
 		//}
 		return "blog/blog-main";
 	}

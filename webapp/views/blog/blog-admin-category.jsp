@@ -35,9 +35,9 @@ var render = function(vo, mode){
 
 	var htmls = 
 				"<tr>" +
-				"<td>"+ vo.no +"</td>" + 
+				"<td>"+ vo.number +"</td>" + 
 				"<td>"+ vo.name +"</td>" + 
-				"<td>10</td>" +
+				"<td>"+ vo.postCount +"</td>" +
 				"<td>"+ vo.description +"</td>" +
 				"<td><img src='${pageContext.request.contextPath}/assets/images/delete.jpg'> " +
 				"<input type='hidden' id='hidden-no' value='"+ vo.no +"'></td>" +
